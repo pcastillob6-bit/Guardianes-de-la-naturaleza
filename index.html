@@ -1,0 +1,1798 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Guardianes de la naturaleza | Trivia 3.° EGB Ecuador</title>
+  <meta name="description" content="Trivia educativa interactiva sobre plantas, animales y cuidado del medio ambiente para tercer grado de EGB en Ecuador." />
+  <meta property="og:title" content="Guardianes de la naturaleza | Trivia 3.° EGB Ecuador" />
+  <meta property="og:description" content="¡El equipo de guardianes te necesita! Recorre cinco estaciones, reúne pistas y aprende a cuidar las plantas y los animales de tu entorno." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#1b5e20" />
+  <style>
+    /* ========================================================
+       ESTILOS - GUARDIANES DE LA NATURALEZA (100% EMBEBIDO)
+       Diseño accesible, adaptativo para móvil y teclado
+       ======================================================== */
+    :root {
+      --color-primary: #1e7e34;
+      --color-primary-dark: #155724;
+      --color-primary-light: #28a745;
+      --color-accent: #ffb703;
+      --color-accent-dark: #fb8500;
+      --color-bg-gradient-start: #e8f5e9;
+      --color-bg-gradient-end: #c8e6c9;
+      --color-card-bg: #ffffff;
+      --color-text-main: #1c3120;
+      --color-text-muted: #4a6b51;
+      --color-border: #c3e6cb;
+      --color-success-bg: #d4edda;
+      --color-success-border: #28a745;
+      --color-success-text: #155724;
+      --color-error-bg: #fff3cd;
+      --color-error-border: #ffc107;
+      --color-error-text: #856404;
+      --color-wrong-bg: #f8d7da;
+      --color-wrong-border: #dc3545;
+      --color-wrong-text: #721c24;
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 12px rgba(27, 94, 32, 0.12);
+      --shadow-lg: 0 8px 24px rgba(27, 94, 32, 0.18);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Nunito", "Comic Neue", sans-serif;
+      background: linear-gradient(135deg, var(--color-bg-gradient-start) 0%, var(--color-bg-gradient-end) 100%);
+      color: var(--color-text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 12px;
+      line-height: 1.5;
+    }
+
+    /* Contenedor principal responsive */
+    .app-container {
+      width: 100%;
+      max-width: 660px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Barra superior accesible */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+    }
+
+    .brand-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--color-primary-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-icon {
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #e8f5e9;
+      border-radius: var(--radius-full);
+      color: var(--color-primary);
+    }
+
+    .score-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff8e1;
+      border: 2px solid #ffd54f;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-weight: 800;
+      color: #b78103;
+      font-size: 1.05rem;
+      box-shadow: 0 2px 6px rgba(255, 183, 3, 0.2);
+    }
+
+    .score-star {
+      width: 22px;
+      height: 22px;
+      fill: #ffb703;
+      stroke: #d48b00;
+      stroke-width: 1.5;
+    }
+
+    .sound-toggle-btn {
+      background: #f1f8e9;
+      border: 1px solid #c5e1a5;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--color-primary-dark);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .sound-toggle-btn:hover, .sound-toggle-btn:focus-visible {
+      background: #dcedc8;
+      outline: 2px solid var(--color-primary);
+    }
+
+    /* Tarjetas principales */
+    .card {
+      background: var(--color-card-bg);
+      border-radius: var(--radius-lg);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-md);
+      border: 2px solid #e0f2e9;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 480px) {
+      .card {
+        padding: 32px 28px;
+        gap: 22px;
+      }
+    }
+
+    /* Pantalla de inicio */
+    .hero-banner {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-badge-egb {
+      background: #e8f5e9;
+      color: var(--color-primary-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid #a5d6a7;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .hero-title {
+      font-size: 1.95rem;
+      line-height: 1.15;
+      font-weight: 900;
+      color: var(--color-primary-dark);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    @media (min-width: 480px) {
+      .hero-title {
+        font-size: 2.35rem;
+      }
+    }
+
+    .hero-illustration {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      margin: 4px 0 8px;
+      filter: drop-shadow(0 6px 12px rgba(30, 126, 52, 0.15));
+    }
+
+    .hero-description {
+      font-size: 1.12rem;
+      color: #27402c;
+      font-weight: 600;
+      background: #f1f8e9;
+      padding: 16px 18px;
+      border-radius: var(--radius-md);
+      border-left: 5px solid var(--color-primary);
+      text-align: left;
+      line-height: 1.45;
+    }
+
+    .stations-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .station-mini-chip {
+      background: #fafdfb;
+      border: 1px solid #cce5d6;
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #22543d;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .station-mini-chip svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: var(--color-primary);
+    }
+
+    /* Barra de progreso de estaciones */
+    .stations-stepper {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 4px;
+      padding: 4px 6px;
+    }
+
+    .stations-stepper::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      right: 14px;
+      height: 4px;
+      background: #e2ede5;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .stepper-progress-fill {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      height: 4px;
+      background: var(--color-primary-light);
+      transform: translateY(-50%);
+      z-index: 2;
+      transition: width 0.3s ease;
+    }
+
+    .step-item {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .step-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: #ffffff;
+      border: 3px solid #cfdfd4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #6c8c74;
+      transition: all 0.25s ease;
+    }
+
+    .step-item.active .step-dot {
+      border-color: var(--color-primary);
+      background: var(--color-primary);
+      color: #ffffff;
+      transform: scale(1.15);
+      box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.2);
+    }
+
+    .step-item.completed .step-dot {
+      border-color: var(--color-primary);
+      background: #e8f5e9;
+      color: var(--color-primary-dark);
+    }
+
+    .step-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #55725d;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      display: none;
+    }
+
+    @media (min-width: 480px) {
+      .step-label {
+        display: block;
+      }
+    }
+
+    /* Encabezado del reto */
+    .station-header {
+      background: linear-gradient(90deg, #e8f5e9 0%, #f1f8e9 100%);
+      border: 1px solid #c8e6c9;
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .station-name-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .station-icon-bubble {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-full);
+      background: #ffffff;
+      border: 2px solid #a5d6a7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary-dark);
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .station-title-text {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--color-primary-dark);
+      line-height: 1.2;
+    }
+
+    .station-subtitle-text {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+    }
+
+    .challenge-pill {
+      background: #ffffff;
+      border: 1.5px solid #a5d6a7;
+      color: var(--color-primary-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+
+    /* Pregunta actual */
+    .question-box {
+      background: #ffffff;
+    }
+
+    .question-stem {
+      font-size: 1.25rem;
+      font-weight: 900;
+      line-height: 1.35;
+      color: #17361c;
+      margin-bottom: 6px;
+    }
+
+    @media (min-width: 480px) {
+      .question-stem {
+        font-size: 1.45rem;
+      }
+    }
+
+    .question-instructions {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #52755a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    /* Opciones grandes */
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .option-btn {
+      width: 100%;
+      min-height: 64px;
+      padding: 14px 18px;
+      background: #fdfdfd;
+      border: 2.5px solid #d0e4d7;
+      border-radius: var(--radius-md);
+      color: #1a3320;
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--color-primary);
+      background: #f1f8e9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(30, 126, 52, 0.12);
+    }
+
+    .option-btn:focus-visible {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 3px;
+    }
+
+    .option-btn:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .option-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .key-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #eef5f0;
+      border: 2px solid #b7d7c2;
+      color: #275233;
+      font-size: 0.95rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .option-text {
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .option-status-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      display: none;
+    }
+
+    /* Estado: Opción correcta */
+    .option-btn.state-correct {
+      background: #e8f5e9 !important;
+      border-color: #2e7d32 !important;
+      color: #1b5e20 !important;
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25) !important;
+    }
+
+    .option-btn.state-correct .key-badge {
+      background: #2e7d32;
+      border-color: #2e7d32;
+      color: #ffffff;
+    }
+
+    .option-btn.state-correct .option-status-icon {
+      display: block;
+      color: #2e7d32;
+    }
+
+    /* Estado: Opción incorrecta (intento fallido) */
+    .option-btn.state-wrong {
+      background: #ffebee !important;
+      border-color: #e57373 !important;
+      color: #c62828 !important;
+      animation: shake 0.35s ease;
+    }
+
+    .option-btn.state-wrong .key-badge {
+      background: #e57373;
+      border-color: #e57373;
+      color: #ffffff;
+    }
+
+    .option-btn.state-wrong .option-status-icon {
+      display: block;
+      color: #c62828;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    /* Panel de retroalimentación / explicación */
+    .feedback-banner {
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      animation: fadeInUp 0.25s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feedback-banner.success {
+      background: #e8f5e9;
+      border: 2px solid #a5d6a7;
+      color: #1b5e20;
+    }
+
+    .feedback-banner.retry {
+      background: #fff8e1;
+      border: 2px solid #ffe082;
+      color: #795548;
+    }
+
+    .feedback-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.05rem;
+      font-weight: 900;
+    }
+
+    .feedback-pts-tag {
+      margin-left: auto;
+      background: #2e7d32;
+      color: #ffffff;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 900;
+    }
+
+    .feedback-body {
+      font-size: 1.02rem;
+      line-height: 1.45;
+      color: #1b3823;
+      font-weight: 600;
+    }
+
+    /* Botón de acción grande */
+    .action-btn-primary {
+      width: 100%;
+      min-height: 58px;
+      padding: 14px 24px;
+      background: linear-gradient(180deg, #2e7d32 0%, #1b5e20 100%);
+      border: none;
+      border-radius: var(--radius-md);
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 6px 18px rgba(27, 94, 32, 0.35);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      letter-spacing: 0.3px;
+    }
+
+    .action-btn-primary:hover:not(:disabled) {
+      background: linear-gradient(180deg, #388e3c 0%, #1e7e34 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(27, 94, 32, 0.42);
+    }
+
+    .action-btn-primary:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .action-btn-primary:focus-visible {
+      outline: 4px solid var(--color-accent);
+      outline-offset: 3px;
+    }
+
+    .action-btn-primary svg {
+      width: 26px;
+      height: 26px;
+      transition: transform 0.2s ease;
+    }
+
+    .action-btn-primary:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Pantalla final */
+    .final-card {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .trophy-badge {
+      width: 90px;
+      height: 90px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, #fff9c4 0%, #ffe082 100%);
+      border: 4px solid #ffb703;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4px auto;
+      box-shadow: 0 8px 20px rgba(251, 133, 0, 0.25);
+      animation: bounceIn 0.6s ease;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.1); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .trophy-badge svg {
+      width: 50px;
+      height: 50px;
+      fill: #f57f17;
+      stroke: #bc5100;
+      stroke-width: 1.5;
+    }
+
+    .final-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: var(--color-primary-dark);
+      line-height: 1.2;
+    }
+
+    .final-score-display {
+      background: #f1f8e9;
+      border: 2px dashed #81c784;
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      width: 100%;
+    }
+
+    .final-score-number {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: #1b5e20;
+      line-height: 1;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .final-score-denominator {
+      font-size: 1.5rem;
+      color: #689f38;
+      font-weight: 700;
+    }
+
+    .final-stats-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 8px;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #33691e;
+    }
+
+    .stat-pill {
+      background: #ffffff;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid #c5e1a5;
+    }
+
+    .required-final-message {
+      font-size: 1.22rem;
+      font-weight: 800;
+      color: #1b5e20;
+      background: #e8f5e9;
+      border-left: 6px solid #2e7d32;
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      text-align: center;
+      width: 100%;
+      line-height: 1.4;
+    }
+
+    /* Mensaje alentador destacado al final */
+    .encouraging-box {
+      background: linear-gradient(135deg, #e8f5e9 0%, #fffde7 100%);
+      border: 2px solid #a5d6a7;
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      text-align: center;
+      width: 100%;
+      box-shadow: 0 4px 14px rgba(46, 125, 50, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      animation: fadeInUp 0.4s ease forwards;
+    }
+
+    .encouraging-title {
+      font-size: 1.18rem;
+      font-weight: 900;
+      color: #1b5e20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .encouraging-text {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #234d2c;
+      font-weight: 700;
+    }
+
+    .encouraging-badge {
+      display: inline-block;
+      margin: 4px auto 0;
+      background: #ffffff;
+      border: 2px solid #ffd54f;
+      color: #9c6c00;
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      font-weight: 800;
+      font-size: 0.94rem;
+      box-shadow: 0 2px 6px rgba(255, 183, 3, 0.2);
+    }
+
+
+    /* Resumen de las 5 estaciones */
+    .summary-stations-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+      margin: 4px 0;
+    }
+
+    .summary-station-item {
+      background: #ffffff;
+      border: 1.5px solid #d7ecd9;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.92rem;
+    }
+
+    .summary-station-item .check-icon {
+      width: 22px;
+      height: 22px;
+      color: #2e7d32;
+      flex-shrink: 0;
+    }
+
+    .summary-station-text {
+      font-weight: 700;
+      color: #2e5936;
+    }
+
+    /* Ayuda de teclado y pie */
+    .keyboard-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #55725d;
+      margin-top: 4px;
+      text-align: center;
+      flex-wrap: wrap;
+    }
+
+    .kbd-chip {
+      background: #ffffff;
+      border: 1px solid #c3e6cb;
+      border-bottom: 2px solid #a8d5b3;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-weight: 800;
+      color: #1e7e34;
+      font-size: 0.78rem;
+    }
+
+    /* Ocultar secciones */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Barra superior accesible -->
+    <header class="top-bar" role="banner" aria-label="Cabecera del juego">
+      <div class="brand-pill">
+        <span class="brand-icon" aria-hidden="true">
+          <!-- Icono Hoja -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+          </svg>
+        </span>
+        <span>Guardianes</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button id="soundToggleBtn" class="sound-toggle-btn" aria-label="Activar o desactivar sonido" title="Sonido">
+          <span id="soundIcon">🔊</span>
+          <span id="soundLabel">Sonido</span>
+        </button>
+
+        <div class="score-badge" aria-live="polite" aria-atomic="true">
+          <svg class="score-star" viewBox="0 0 24 24" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <span id="scoreText">0</span>
+          <span style="font-size: 0.8rem; font-weight: 700; color: #9c6c00;">pts</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stepper de 5 Estaciones (visible durante el juego) -->
+    <nav id="stationsStepper" class="stations-stepper hidden" aria-label="Progreso de las estaciones">
+      <div id="stepperFill" class="stepper-progress-fill" style="width: 0%;"></div>
+      
+      <div class="step-item" id="step-0" data-station="1">
+        <div class="step-dot">1</div>
+        <span class="step-label">Plantas</span>
+      </div>
+      <div class="step-item" id="step-1" data-station="2">
+        <div class="step-dot">2</div>
+        <span class="step-label">Cuidados</span>
+      </div>
+      <div class="step-item" id="step-2" data-station="3">
+        <div class="step-dot">3</div>
+        <span class="step-label">Animales</span>
+      </div>
+      <div class="step-item" id="step-3" data-station="4">
+        <div class="step-dot">4</div>
+        <span class="step-label">Personas</span>
+      </div>
+      <div class="step-item" id="step-4" data-station="5">
+        <div class="step-dot">5</div>
+        <span class="step-label">Hábitat</span>
+      </div>
+    </nav>
+
+    <!-- ==============================================
+         PANTALLA 1: INICIO
+         ============================================== -->
+    <main id="startScreen" class="card" role="main">
+      <div class="hero-banner">
+        <span class="hero-badge-egb">Ciencias Naturales • 3.° de EGB Ecuador</span>
+        <h1 class="hero-title">Guardianes de la naturaleza</h1>
+        
+        <!-- Ilustración SVG amigable de la naturaleza ecuatoriana -->
+        <svg class="hero-illustration" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mundo natural con montañas, plantas y animales">
+          <!-- Fondo cielo suave y sol -->
+          <circle cx="260" cy="50" r="32" fill="#FFE082" />
+          <circle cx="260" cy="50" r="42" fill="#FFF8E1" fill-opacity="0.5" />
+          
+          <!-- Montañas andinas -->
+          <path d="M40 160 L110 70 L180 160 Z" fill="#81C784" />
+          <path d="M95 90 L110 70 L125 90 Z" fill="#E8F5E9" />
+          <path d="M130 160 L195 85 L260 160 Z" fill="#66BB6A" />
+          <path d="M180 102 L195 85 L210 102 Z" fill="#E8F5E9" />
+
+          <!-- Colina delantera -->
+          <ellipse cx="160" cy="180" rx="170" ry="40" fill="#4CAF50" />
+          
+          <!-- Árbol grande -->
+          <rect x="75" y="125" width="14" height="40" rx="3" fill="#6D4C41" />
+          <circle cx="82" cy="115" r="28" fill="#2E7D32" />
+          <circle cx="96" cy="110" r="20" fill="#388E3C" />
+          <circle cx="68" cy="110" r="20" fill="#388E3C" />
+          
+          <!-- Planta y flor -->
+          <path d="M235 155 Q240 140 245 130" stroke="#2E7D32" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <circle cx="245" cy="128" r="10" fill="#FFB703" />
+          <circle cx="245" cy="128" r="5" fill="#E65100" />
+          <ellipse cx="236" cy="144" rx="8" ry="4" fill="#66BB6A" transform="rotate(-30 236 144)"/>
+          <ellipse cx="254" cy="138" rx="8" ry="4" fill="#66BB6A" transform="rotate(30 254 138)"/>
+
+          <!-- Tortuga / Caracol sonriente del bosque -->
+          <ellipse cx="155" cy="160" rx="22" ry="14" fill="#33691E" />
+          <circle cx="178" cy="154" r="9" fill="#558B2F" />
+          <circle cx="181" cy="152" r="2.5" fill="#212121" />
+          <circle cx="182" cy="151" r="0.8" fill="#FFFFFF" />
+          <path d="M178 158 Q182 161 185 157" stroke="#212121" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          
+          <!-- Mariposa revoloteando -->
+          <ellipse cx="195" cy="58" rx="7" ry="5" fill="#4FC3F7" transform="rotate(-20 195 58)"/>
+          <ellipse cx="205" cy="54" rx="7" ry="5" fill="#4FC3F7" transform="rotate(20 205 54)"/>
+          <line x1="200" y1="52" x2="200" y2="60" stroke="#37474F" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+
+        <!-- Texto exacto requerido por el usuario -->
+        <p class="hero-description">
+          «¡El equipo de guardianes te necesita! Recorre cinco estaciones, reúne pistas y aprende a cuidar las plantas y los animales de tu entorno».
+        </p>
+      </div>
+
+      <!-- Vista previa de las 5 estaciones -->
+      <div>
+        <p style="font-size: 0.88rem; font-weight: 800; color: #2e5936; margin-bottom: 6px;">
+          Tu aventura incluye 5 estaciones (2 retos por estación = 10 retos):
+        </p>
+        <div class="stations-preview">
+          <div class="station-mini-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22v-9"/><path d="M8 13s1.5-2 4-2 4 2 4 2"/><path d="M5 9c2-3 7-3 7-3s5 0 7 3-2 6-7 6-7-3-7-6Z"/></svg>
+            1. Partes de las plantas
+          </div>
+          <div class="station-mini-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+            2. Tipos y cuidados
+          </div>
+          <div class="station-mini-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6-3.56 0-7.56-2.54-8.5-6Z"/><path d="M18 12v.01"/><path d="M2 12c2.5-4 4.5-4 6 0-1.5 4-3.5 4-6 0Z"/></svg>
+            3. Vertebrados e invertebrados
+          </div>
+          <div class="station-mini-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            4. Animales y personas
+          </div>
+          <div class="station-mini-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+            5. Alimentación y hábitat
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón Empezar -->
+      <button id="startBtn" class="action-btn-primary" type="button" autofocus>
+        <span>Empezar</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <div class="keyboard-hint">
+        <span>💡 Puedes usar tu pantalla táctil o el teclado:</span>
+        <span>Pulsa <kbd class="kbd-chip">Enter</kbd> o <kbd class="kbd-chip">Espacio</kbd> para empezar.</span>
+      </div>
+    </main>
+
+    <!-- ==============================================
+         PANTALLA 2: RETO / PREGUNTA ACTIVA
+         ============================================== -->
+    <main id="quizScreen" class="card hidden" role="main" aria-live="polite">
+      
+      <!-- Encabezado de la estación actual -->
+      <section class="station-header" aria-label="Información de la estación actual">
+        <div class="station-name-wrap">
+          <div id="stationIconBubble" class="station-icon-bubble" aria-hidden="true">
+            <!-- Icono dinámico según la estación -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/></svg>
+          </div>
+          <div>
+            <div id="stationTitle" class="station-title-text">Estación 1: Partes de las plantas</div>
+            <div id="stationSubtitle" class="station-subtitle-text">Reto 1 de 2 en esta estación</div>
+          </div>
+        </div>
+
+        <div class="challenge-pill">
+          <span id="questionGlobalCounter">Reto 1 de 10</span>
+        </div>
+      </section>
+
+      <!-- Caja de la Pregunta -->
+      <section class="question-box">
+        <h2 id="questionStem" class="question-stem">¿Qué parte de la planta absorbe agua?</h2>
+        <p class="question-instructions">
+          <span>Selecciona una opción:</span>
+        </p>
+
+        <!-- Tres opciones grandes -->
+        <div id="optionsContainer" class="options-grid" role="group" aria-label="Opciones de respuesta">
+          <!-- Botón Opción 1 -->
+          <button id="optBtn0" class="option-btn" type="button" data-index="0">
+            <div class="option-left">
+              <span class="key-badge">1</span>
+              <span id="optText0" class="option-text">Raíz</span>
+            </div>
+            <!-- Checkmark o cruz dinámico -->
+            <svg id="optIcon0" class="option-status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+
+          <!-- Botón Opción 2 -->
+          <button id="optBtn1" class="option-btn" type="button" data-index="1">
+            <div class="option-left">
+              <span class="key-badge">2</span>
+              <span id="optText1" class="option-text">Flor</span>
+            </div>
+            <svg id="optIcon1" class="option-status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+
+          <!-- Botón Opción 3 -->
+          <button id="optBtn2" class="option-btn" type="button" data-index="2">
+            <div class="option-left">
+              <span class="key-badge">3</span>
+              <span id="optText2" class="option-text">Fruto</span>
+            </div>
+            <svg id="optIcon2" class="option-status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- Panel de Retroalimentación y Explicación -->
+      <section id="feedbackBox" class="feedback-banner hidden" aria-live="assertive">
+        <div class="feedback-header">
+          <span id="feedbackIcon">🌱</span>
+          <span id="feedbackTitle">¡Correcto!</span>
+          <span id="feedbackPointsTag" class="feedback-pts-tag">+10 pts</span>
+        </div>
+        <p id="feedbackExplanation" class="feedback-body">
+          La raíz absorbe agua del suelo.
+        </p>
+      </section>
+
+      <!-- Botón de avance -->
+      <button id="nextBtn" class="action-btn-primary hidden" type="button">
+        <span id="nextBtnText">Siguiente reto</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- Guía accesible de teclado -->
+      <footer class="keyboard-hint" aria-hidden="true">
+        <span>Teclas rápidas:</span>
+        <span><kbd class="kbd-chip">1</kbd> <kbd class="kbd-chip">2</kbd> <kbd class="kbd-chip">3</kbd> para elegir opción</span>
+        <span>•</span>
+        <span><kbd class="kbd-chip">Enter</kbd> para continuar</span>
+      </footer>
+    </main>
+
+    <!-- ==============================================
+         PANTALLA 3: RESULTADOS FINALES
+         ============================================== -->
+    <main id="finalScreen" class="card final-card hidden" role="main">
+      <div class="trophy-badge" aria-hidden="true">
+        <!-- Copa / Medalla dorada -->
+        <svg viewBox="0 0 24 24">
+          <path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"/>
+          <path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/>
+          <path d="M4 3h16v6a8 8 0 0 1-16 0V3z"/>
+          <path d="M12 17v4"/>
+          <path d="M8 21h8"/>
+        </svg>
+      </div>
+
+      <h1 class="final-title">¡Misión Cumplida, Guardián!</h1>
+
+      <!-- Puntuación sobre 100 -->
+      <div class="final-score-display" aria-label="Puntaje obtenido">
+        <div class="final-score-number">
+          <span id="finalScoreValue">100</span>
+          <span class="final-score-denominator">/ 100</span>
+        </div>
+        <div class="final-stats-row">
+          <div class="stat-pill">
+            <span id="finalChallengesCompleted">10 de 10 retos completados</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensaje alentador para los estudiantes de 3.° EGB -->
+      <div class="encouraging-box" role="region" aria-label="Mensaje alentador">
+        <div class="encouraging-title">
+          <span aria-hidden="true">🌱</span>
+          <span>¡Mensaje Especial de los Guardianes!</span>
+          <span aria-hidden="true">✨</span>
+        </div>
+        <p class="encouraging-text">
+          ¡Felicidades por tu entusiasmo, valentía y dedicación! Cada semilla que siembras, cada animal que respetas y cada acción de cuidado que practicas en tu escuela y hogar llenan de vida a nuestro hermoso Ecuador. ¡Sigue brillando y protegiendo el entorno con alegría y curiosidad!
+        </p>
+        <div id="encouragingDynamicBadge" class="encouraging-badge">
+          🌟 ¡Excelente esfuerzo! El planeta sonríe con cada buen guardián.
+        </div>
+      </div>
+
+      <!-- Texto obligatorio requerido por el usuario -->
+      <div class="required-final-message">
+        «¡Cada pista te ayuda a cuidar mejor la naturaleza!»
+      </div>
+
+      <!-- Resumen de pistas aprendidas en las 5 estaciones -->
+      <div style="width: 100%; text-align: left;">
+        <h3 style="font-size: 1rem; font-weight: 800; color: #1e7e34; margin-bottom: 8px;">
+          Pistas reunidas en tu cuaderno de guardián:
+        </h3>
+        <div class="summary-stations-list">
+          <div class="summary-station-item">
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="summary-station-text"><strong>Estación 1:</strong> La raíz absorbe el agua y el tallo sostiene las hojas.</span>
+          </div>
+          <div class="summary-station-item">
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="summary-station-text"><strong>Estación 2:</strong> El árbol tiene tronco principal y revisamos la tierra antes de regar.</span>
+          </div>
+          <div class="summary-station-item">
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="summary-station-text"><strong>Estación 3:</strong> Los peces tienen columna vertebral y los caracoles carecen de ella.</span>
+          </div>
+          <div class="summary-station-item">
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="summary-station-text"><strong>Estación 4:</strong> La gallina aporta huevos y a los animales silvestres los cuidamos protegiendo su hábitat.</span>
+          </div>
+          <div class="summary-station-item">
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="summary-station-text"><strong>Estación 5:</strong> El oso es omnívoro y la vaca encuentra hierba en la pradera.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón Volver a jugar (reinicia todo) -->
+      <button id="restartBtn" class="action-btn-primary" type="button" autofocus>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate(-45deg);">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        <span>Volver a jugar</span>
+      </button>
+
+      <div class="keyboard-hint">
+        <span>Pulsa <kbd class="kbd-chip">Enter</kbd> o <kbd class="kbd-chip">Espacio</kbd> para volver a jugar.</span>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ==============================================
+       JAVASCRIPT INCORPORADO (100% EMBEBIDO, SIN DEPENDENCIAS)
+       ============================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ========================================================
+         BANCO OFICIAL DE PREGUNTAS (5 ESTACIONES, 2 RETOS C/U = 10)
+         En orden exacto especificado por el usuario
+         ======================================================== */
+      const QUESTION_BANK = [
+        // ESTACIÓN 1: Partes de las plantas
+        {
+          stationIndex: 0,
+          stationNumber: 1,
+          stationName: "Partes de las plantas",
+          stationChallengeNum: 1,
+          question: "¿Qué parte de la planta absorbe agua?",
+          options: ["Raíz", "Flor", "Fruto"],
+          correctIndex: 0, // Raíz
+          explanation: "La raíz absorbe agua del suelo."
+        },
+        {
+          stationIndex: 0,
+          stationNumber: 1,
+          stationName: "Partes de las plantas",
+          stationChallengeNum: 2,
+          question: "¿Qué parte sostiene las hojas?",
+          options: ["Semilla", "Tallo", "Raíz"],
+          correctIndex: 1, // Tallo
+          explanation: "El tallo sostiene las hojas."
+        },
+
+        // ESTACIÓN 2: Tipos y cuidados
+        {
+          stationIndex: 1,
+          stationNumber: 2,
+          stationName: "Tipos y cuidados",
+          stationChallengeNum: 1,
+          question: "¿Qué planta suele tener un tronco leñoso principal?",
+          options: ["Hierba", "Arbusto", "Árbol"],
+          correctIndex: 2, // Árbol
+          explanation: "Un árbol suele tener un tronco principal."
+        },
+        {
+          stationIndex: 1,
+          stationNumber: 2,
+          stationName: "Tipos y cuidados",
+          stationChallengeNum: 2,
+          question: "¿Qué conviene hacer antes de regar una planta en maceta?",
+          options: ["Revisar la tierra", "Llenar la maceta de agua", "Arrancar hojas"],
+          correctIndex: 0, // Revisar la tierra
+          explanation: "La planta se riega según la humedad de la tierra y sus necesidades."
+        },
+
+        // ESTACIÓN 3: Vertebrados e invertebrados
+        {
+          stationIndex: 2,
+          stationNumber: 3,
+          stationName: "Vertebrados e invertebrados",
+          stationChallengeNum: 1,
+          question: "¿Cuál es vertebrado?",
+          options: ["Caracol", "Pez", "Medusa"],
+          correctIndex: 1, // Pez
+          explanation: "El pez tiene columna vertebral."
+        },
+        {
+          stationIndex: 2,
+          stationNumber: 3,
+          stationName: "Vertebrados e invertebrados",
+          stationChallengeNum: 2,
+          question: "¿Por qué el caracol es invertebrado?",
+          options: ["Tiene concha", "Se mueve despacio", "Carece de columna vertebral"],
+          correctIndex: 2, // Carece de columna vertebral
+          explanation: "La concha protege su cuerpo. La clasificación depende de si tiene columna."
+        },
+
+        // ESTACIÓN 4: Animales y personas
+        {
+          stationIndex: 3,
+          stationNumber: 4,
+          stationName: "Animales y personas",
+          stationChallengeNum: 1,
+          question: "¿Qué alimento puede aportar una gallina de granja?",
+          options: ["Huevos", "Leche", "Semillas"],
+          correctIndex: 0, // Huevos
+          explanation: "Las gallinas ponen huevos."
+        },
+        {
+          stationIndex: 3,
+          stationNumber: 4,
+          stationName: "Animales y personas",
+          stationChallengeNum: 2,
+          question: "¿Cómo cuidamos a los animales silvestres?",
+          options: ["Llevarlos a casa", "Proteger donde viven", "Quitar su refugio"],
+          correctIndex: 1, // Proteger donde viven
+          explanation: "El hábitat les ofrece recursos para vivir."
+        },
+
+        // ESTACIÓN 5: Alimentación y hábitat
+        {
+          stationIndex: 4,
+          stationNumber: 5,
+          stationName: "Alimentación y hábitat",
+          stationChallengeNum: 1,
+          question: "Si un oso come bayas y peces, ¿cómo se clasifica?",
+          options: ["Herbívoro", "Carnívoro", "Omnívoro"],
+          correctIndex: 2, // Omnívoro
+          explanation: "Come alimentos de origen vegetal y animal."
+        },
+        {
+          stationIndex: 4,
+          stationNumber: 5,
+          stationName: "Alimentación y hábitat",
+          stationChallengeNum: 2,
+          question: "¿Dónde podría encontrar hierba una vaca?",
+          options: ["Pradera", "Mar abierto", "Estacionamiento pavimentado"],
+          correctIndex: 0, // Pradera
+          explanation: "En la pradera puede encontrar hierba."
+        }
+      ];
+
+      /* Iconos SVG por estación */
+      const STATION_SVGS = [
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/></svg>',
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22v-7"/><path d="M9 9a5 5 0 0 1 6 0 5 5 0 0 1 2 4H7a5 5 0 0 1 2-4z"/></svg>',
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6-3.56 0-7.56-2.54-8.5-6Z"/><path d="M18 12v.01"/></svg>',
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>',
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>'
+      ];
+
+      /* ========================================================
+         SISTEMA DE AUDIO SINTETIZADO (WEB AUDIO API OFFLINE)
+         Cero archivos de sonido externos, 100% autónomo
+         ======================================================== */
+      let audioCtx = null;
+      let soundEnabled = true;
+
+      function getAudioContext() {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            audioCtx = new AudioContextClass();
+          }
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        return audioCtx;
+      }
+
+      function playTone(freq, type, duration, delay = 0, volume = 0.15) {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+          gain.gain.setValueAtTime(volume, ctx.currentTime + delay);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + duration);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + delay);
+          osc.stop(ctx.currentTime + delay + duration);
+        } catch (e) {
+          // Audio context safe fallback
+        }
+      }
+
+      function playSoundCorrect() {
+        // Melodía alegre y suave de acierto (Do - Mi - Sol)
+        playTone(523.25, 'triangle', 0.12, 0, 0.2);     // C5
+        playTone(659.25, 'triangle', 0.14, 0.08, 0.22);  // E5
+        playTone(783.99, 'triangle', 0.25, 0.16, 0.25);  // G5
+      }
+
+      function playSoundIncorrect() {
+        // Tono suave de "¡Casi! Inténtalo de nuevo"
+        playTone(329.63, 'sine', 0.12, 0, 0.18);
+        playTone(261.63, 'sine', 0.18, 0.10, 0.18);
+      }
+
+      function playSoundClick() {
+        playTone(440, 'triangle', 0.04, 0, 0.08);
+      }
+
+      function playSoundVictory() {
+        // Fanfarria triunfal para la pantalla final
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, i) => {
+          playTone(freq, 'triangle', 0.22, i * 0.1, 0.25);
+        });
+      }
+
+      /* ========================================================
+         ESTADO DE LA APLICACIÓN
+         ======================================================== */
+      let state = {
+        currentScreen: 'start', // 'start' | 'quiz' | 'final'
+        currentIndex: 0,        // 0 a 9
+        score: 0,               // 0 a 100 (10 pts por acierto al primer intento)
+        attemptsInCurrentChallenge: 0, // Conteo de intentos en la pregunta activa
+        hasScoredCurrentChallenge: false, // Bloqueo para impedir puntajes duplicados
+        isAnswerResolved: false // Si ya seleccionó la opción correcta y puede avanzar
+      };
+
+      /* Referencias a elementos del DOM */
+      const startScreen = document.getElementById('startScreen');
+      const quizScreen = document.getElementById('quizScreen');
+      const finalScreen = document.getElementById('finalScreen');
+      const stationsStepper = document.getElementById('stationsStepper');
+      const stepperFill = document.getElementById('stepperFill');
+
+      const startBtn = document.getElementById('startBtn');
+      const restartBtn = document.getElementById('restartBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const nextBtnText = document.getElementById('nextBtnText');
+
+      const scoreText = document.getElementById('scoreText');
+      const soundToggleBtn = document.getElementById('soundToggleBtn');
+      const soundIcon = document.getElementById('soundIcon');
+      const soundLabel = document.getElementById('soundLabel');
+
+      const stationTitle = document.getElementById('stationTitle');
+      const stationSubtitle = document.getElementById('stationSubtitle');
+      const stationIconBubble = document.getElementById('stationIconBubble');
+      const questionGlobalCounter = document.getElementById('questionGlobalCounter');
+      const questionStem = document.getElementById('questionStem');
+
+      const optBtns = [
+        document.getElementById('optBtn0'),
+        document.getElementById('optBtn1'),
+        document.getElementById('optBtn2')
+      ];
+      const optTexts = [
+        document.getElementById('optText0'),
+        document.getElementById('optText1'),
+        document.getElementById('optText2')
+      ];
+      const optIcons = [
+        document.getElementById('optIcon0'),
+        document.getElementById('optIcon1'),
+        document.getElementById('optIcon2')
+      ];
+
+      const feedbackBox = document.getElementById('feedbackBox');
+      const feedbackIcon = document.getElementById('feedbackIcon');
+      const feedbackTitle = document.getElementById('feedbackTitle');
+      const feedbackPointsTag = document.getElementById('feedbackPointsTag');
+      const feedbackExplanation = document.getElementById('feedbackExplanation');
+
+      const finalScoreValue = document.getElementById('finalScoreValue');
+      const finalChallengesCompleted = document.getElementById('finalChallengesCompleted');
+      const encouragingDynamicBadge = document.getElementById('encouragingDynamicBadge');
+
+      /* ========================================================
+         LÓGICA DEL JUEGO
+         ======================================================== */
+
+      /* Inicializar o reiniciar todo */
+      function resetGame() {
+        state.currentScreen = 'quiz';
+        state.currentIndex = 0;
+        state.score = 0;
+        state.attemptsInCurrentChallenge = 0;
+        state.hasScoredCurrentChallenge = false;
+        state.isAnswerResolved = false;
+
+        updateScoreDisplay();
+        showScreen('quiz');
+        loadQuestion(0);
+      }
+
+      /* Cambiar de pantalla */
+      function showScreen(screen) {
+        state.currentScreen = screen;
+        startScreen.classList.add('hidden');
+        quizScreen.classList.add('hidden');
+        finalScreen.classList.add('hidden');
+        stationsStepper.classList.add('hidden');
+
+        if (screen === 'start') {
+          startScreen.classList.remove('hidden');
+          startBtn.focus();
+        } else if (screen === 'quiz') {
+          quizScreen.classList.remove('hidden');
+          stationsStepper.classList.remove('hidden');
+        } else if (screen === 'final') {
+          finalScreen.classList.remove('hidden');
+          restartBtn.focus();
+        }
+      }
+
+      /* Actualizar visualización del puntaje */
+      function updateScoreDisplay() {
+        scoreText.textContent = state.score;
+      }
+
+      /* Actualizar stepper de 5 estaciones */
+      function updateStepper(stationIdx) {
+        const totalSteps = 5;
+        const progressPercent = (stationIdx / (totalSteps - 1)) * 100;
+        stepperFill.style.width = Math.min(progressPercent, 100) + '%';
+
+        for (let i = 0; i < totalSteps; i++) {
+          const stepEl = document.getElementById('step-' + i);
+          if (!stepEl) continue;
+          stepEl.classList.remove('active', 'completed');
+          if (i < stationIdx) {
+            stepEl.classList.add('completed');
+          } else if (i === stationIdx) {
+            stepEl.classList.add('active');
+          }
+        }
+      }
+
+      /* Cargar pregunta en pantalla */
+      function loadQuestion(index) {
+        const q = QUESTION_BANK[index];
+        state.attemptsInCurrentChallenge = 0;
+        state.hasScoredCurrentChallenge = false;
+        state.isAnswerResolved = false;
+
+        // Actualizar Stepper y Cabecera
+        updateStepper(q.stationIndex);
+        stationTitle.textContent = 'Estación ' + q.stationNumber + ': ' + q.stationName;
+        stationSubtitle.textContent = 'Reto ' + q.stationChallengeNum + ' de 2 en esta estación';
+        stationIconBubble.innerHTML = STATION_SVGS[q.stationIndex] || STATION_SVGS[0];
+        questionGlobalCounter.textContent = 'Reto ' + (index + 1) + ' de ' + QUESTION_BANK.length;
+
+        // Texto de la pregunta
+        questionStem.textContent = q.question;
+
+        // Opciones
+        for (let i = 0; i < 3; i++) {
+          const btn = optBtns[i];
+          optTexts[i].textContent = q.options[i];
+          btn.disabled = false;
+          btn.className = 'option-btn';
+          optIcons[i].style.display = 'none';
+        }
+
+        // Ocultar retroalimentación y botón siguiente
+        feedbackBox.className = 'feedback-banner hidden';
+        nextBtn.classList.add('hidden');
+
+        // Enfocar la primera opción para accesibilidad por teclado
+        setTimeout(function() {
+          optBtns[0].focus();
+        }, 50);
+      }
+
+      /* Manejo de selección de opción */
+      function handleOptionSelect(chosenIndex) {
+        // Si ya está resuelta la pregunta, no procesar más clics en opciones
+        if (state.isAnswerResolved) return;
+
+        const q = QUESTION_BANK[state.currentIndex];
+        state.attemptsInCurrentChallenge++;
+
+        const isCorrect = (chosenIndex === q.correctIndex);
+        const isFirstAttempt = (state.attemptsInCurrentChallenge === 1);
+
+        const chosenBtn = optBtns[chosenIndex];
+
+        if (isCorrect) {
+          // --- RESPUESTA CORRECTA ---
+          state.isAnswerResolved = true;
+
+          // Regla: 10 puntos por acierto al primer intento.
+          // Impide puntajes duplicados estrictamente.
+          if (isFirstAttempt && !state.hasScoredCurrentChallenge) {
+            state.score += 10;
+            state.hasScoredCurrentChallenge = true;
+            updateScoreDisplay();
+          }
+
+          playSoundCorrect();
+
+          // Resaltar opción correcta
+          chosenBtn.classList.add('state-correct');
+          optIcons[chosenIndex].innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
+          optIcons[chosenIndex].style.display = 'block';
+
+          // Deshabilitar todas las opciones
+          optBtns.forEach(btn => btn.disabled = true);
+
+          // Mostrar retroalimentación con la explicación oficial
+          feedbackBox.className = 'feedback-banner success';
+          feedbackBox.classList.remove('hidden');
+
+          if (isFirstAttempt) {
+            feedbackIcon.textContent = '🌟';
+            feedbackTitle.textContent = '¡Excelente al primer intento!';
+            feedbackPointsTag.textContent = '+10 pts';
+            feedbackPointsTag.style.display = 'inline-block';
+          } else {
+            feedbackIcon.textContent = '🌱';
+            feedbackTitle.textContent = '¡Muy bien corregido!';
+            feedbackPointsTag.textContent = 'Pista aprendida';
+            feedbackPointsTag.style.display = 'inline-block';
+            feedbackPointsTag.style.background = '#689f38';
+          }
+
+          feedbackExplanation.textContent = 'Explicación: ' + q.explanation;
+
+          // Mostrar botón de avanzar
+          if (state.currentIndex === QUESTION_BANK.length - 1) {
+            nextBtnText.textContent = 'Ver resultados finales';
+          } else {
+            nextBtnText.textContent = 'Siguiente reto';
+          }
+          nextBtn.classList.remove('hidden');
+          nextBtn.focus();
+
+        } else {
+          // --- RESPUESTA INCORRECTA (ERROR) ---
+          // "Si hay un error, permite corregir y avanzar sin sumar en ese reto. Impide puntajes duplicados."
+          playSoundIncorrect();
+
+          chosenBtn.classList.add('state-wrong');
+          chosenBtn.disabled = true; // Deshabilita la opción errónea para que elija entre las restantes
+          optIcons[chosenIndex].innerHTML = '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>';
+          optIcons[chosenIndex].style.display = 'block';
+
+          // Mostrar mensaje de ánimo para corregir
+          feedbackBox.className = 'feedback-banner retry';
+          feedbackBox.classList.remove('hidden');
+          feedbackIcon.textContent = '🔍';
+          feedbackTitle.textContent = '¡Casi! Inténtalo de nuevo';
+          feedbackPointsTag.style.display = 'none';
+          feedbackExplanation.textContent = 'Revisa con calma las opciones restantes y selecciona la correcta para descubrir la pista.';
+        }
+      }
+
+      /* Avanzar a la siguiente pregunta o a la pantalla final */
+      function handleNextChallenge() {
+        playSoundClick();
+        if (state.currentIndex < QUESTION_BANK.length - 1) {
+          state.currentIndex++;
+          loadQuestion(state.currentIndex);
+        } else {
+          showFinalResults();
+        }
+      }
+
+      /* Mostrar pantalla final */
+      function showFinalResults() {
+        showScreen('final');
+        playSoundVictory();
+
+        // Mostrar resultado sobre 100
+        finalScoreValue.textContent = state.score;
+        finalChallengesCompleted.textContent = QUESTION_BANK.length + ' de ' + QUESTION_BANK.length + ' retos completados';
+
+        // Mensaje alentador según el desempeño
+        if (state.score === 100) {
+          encouragingDynamicBadge.textContent = '🌟 ¡Puntuación perfecta! Eres un súper guardián de honor de la naturaleza.';
+        } else if (state.score >= 80) {
+          encouragingDynamicBadge.textContent = '🌿 ¡Gran trabajo! Tu cariño por los seres vivos se nota en cada respuesta.';
+        } else if (state.score >= 60) {
+          encouragingDynamicBadge.textContent = '🌱 ¡Muy bien hecho! Corregiste, aprendiste y ahora conoces valiosas pistas.';
+        } else {
+          encouragingDynamicBadge.textContent = '🌼 ¡Valiente explorador! Lo más importante es aprender a cuidar nuestro entorno.';
+        }
+
+        // Animar el contador de puntaje de 0 al puntaje real
+        animateScore(state.score);
+      }
+
+      /* Animación suave del puntaje en pantalla final */
+      function animateScore(targetScore) {
+        let current = 0;
+        finalScoreValue.textContent = '0';
+        const stepTime = 15;
+        const increment = targetScore > 0 ? 1 : 0;
+        if (targetScore === 0) return;
+
+        const timer = setInterval(function () {
+          current += 2;
+          if (current >= targetScore) {
+            current = targetScore;
+            clearInterval(timer);
+          }
+          finalScoreValue.textContent = current;
+        }, stepTime);
+      }
+
+      /* ========================================================
+         EVENTOS Y ACCESIBILIDAD POR TECLADO
+         ======================================================== */
+
+      // Clics en botones principales
+      startBtn.addEventListener('click', function () {
+        playSoundClick();
+        resetGame();
+      });
+
+      restartBtn.addEventListener('click', function () {
+        playSoundClick();
+        resetGame();
+      });
+
+      nextBtn.addEventListener('click', handleNextChallenge);
+
+      // Clics en las opciones
+      optBtns.forEach((btn, index) => {
+        btn.addEventListener('click', function () {
+          handleOptionSelect(index);
+        });
+      });
+
+      // Conmutador de sonido
+      soundToggleBtn.addEventListener('click', function () {
+        soundEnabled = !soundEnabled;
+        if (soundEnabled) {
+          soundIcon.textContent = '🔊';
+          soundLabel.textContent = 'Sonido';
+          soundToggleBtn.setAttribute('aria-label', 'Desactivar sonido');
+          playTone(523.25, 'triangle', 0.08, 0, 0.15);
+        } else {
+          soundIcon.textContent = '🔇';
+          soundLabel.textContent = 'Silencio';
+          soundToggleBtn.setAttribute('aria-label', 'Activar sonido');
+        }
+      });
+
+      // Navegación accesible por teclado (1, 2, 3, Enter, Espacio)
+      window.addEventListener('keydown', function (e) {
+        // En pantalla de Inicio: Enter o Espacio inicia el juego
+        if (state.currentScreen === 'start') {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            startBtn.click();
+          }
+          return;
+        }
+
+        // En pantalla Final: Enter o Espacio reinicia el juego
+        if (state.currentScreen === 'final') {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            restartBtn.click();
+          }
+          return;
+        }
+
+        // En pantalla de Pregunta:
+        if (state.currentScreen === 'quiz') {
+          // Si el botón siguiente está visible y pulsamos Enter o Espacio: avanzar
+          if (!nextBtn.classList.contains('hidden') && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            nextBtn.click();
+            return;
+          }
+
+          // Si la pregunta aún no está resuelta: teclas 1, 2, 3 o A, B, C
+          if (!state.isAnswerResolved) {
+            if (e.key === '1' || e.key === 'a' || e.key === 'A') {
+              e.preventDefault();
+              if (!optBtns[0].disabled) optBtns[0].click();
+            } else if (e.key === '2' || e.key === 'b' || e.key === 'B') {
+              e.preventDefault();
+              if (!optBtns[1].disabled) optBtns[1].click();
+            } else if (e.key === '3' || e.key === 'c' || e.key === 'C') {
+              e.preventDefault();
+              if (!optBtns[2].disabled) optBtns[2].click();
+            }
+          }
+        }
+      });
+
+      // Inicializar en pantalla de bienvenida
+      showScreen('start');
+
+    })();
+  </script>
+</body>
+</html>
